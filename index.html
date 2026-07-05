@@ -4,10 +4,9 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Aim Coach — Coaching de aim para Valorant</title>
-  <meta name="description" content="Aim Coach: coaching de aim en tiempo real para Valorant. Feedback de recoil, flicks, movimiento y crosshair placement en un overlay in-game. No afiliado a Riot Games." />
-  <!-- Open Graph (link previews en Discord/redes) -->
-  <meta property="og:title" content="Aim Coach — Coaching de aim para Valorant" />
-  <meta property="og:description" content="Feedback de aim en tiempo real dentro del juego. Recoil, flicks, movimiento y placement." />
+  <meta name="description" content="Aim Coach: real-time aim coaching overlay for VALORANT. Feedback on recoil, flicks, movement and crosshair placement, in-game. Not affiliated with Riot Games." />
+  <meta property="og:title" content="Aim Coach — Aim coaching for VALORANT" />
+  <meta property="og:description" content="Real-time aim feedback inside the game. Recoil, flicks, movement and placement." />
   <meta property="og:type" content="website" />
   <style>
     :root{
@@ -17,31 +16,28 @@
     }
     *{box-sizing:border-box}
     html,body{margin:0}
-    body{
-      background:var(--navy); color:var(--off);
-      font-family:system-ui,'Segoe UI',sans-serif; -webkit-font-smoothing:antialiased;
-      line-height:1.55;
-    }
+    body{background:var(--navy); color:var(--off); font-family:system-ui,'Segoe UI',sans-serif; -webkit-font-smoothing:antialiased; line-height:1.55;}
     a{color:var(--teal)}
     .wrap{max-width:var(--maxw); margin:0 auto; padding:0 clamp(16px,4vw,32px)}
-    /* barra */
     header{border-bottom:1px solid var(--line)}
     .bar{display:flex; align-items:center; gap:10px; padding:16px 0}
     .dot{width:10px;height:10px;border-radius:50%;background:var(--red)}
     .brand{font-weight:800; letter-spacing:.02em; font-size:1.1rem}
     .brand small{color:var(--muted); font-weight:600; margin-left:8px; font-size:.72rem; text-transform:uppercase; letter-spacing:.12em}
-    /* hero */
+    /* switch de idioma */
+    #lang{margin-left:auto; display:inline-flex; border:1px solid var(--line); border-radius:8px; overflow:hidden}
+    #lang button{background:transparent; color:var(--muted); border:0; padding:6px 12px; font:inherit; font-size:.8rem; font-weight:700; cursor:pointer; letter-spacing:.04em}
+    #lang button.on{background:var(--red); color:#fff}
+    #lang button:not(.on):hover{color:var(--off)}
     .hero{padding:clamp(48px,9vw,96px) 0 clamp(32px,6vw,64px)}
     .hero h1{font-size:clamp(2.2rem,6vw,3.6rem); line-height:1.05; margin:0 0 14px; letter-spacing:-.02em}
     .hero h1 span{color:var(--red)}
     .hero p.lead{font-size:clamp(1.05rem,2.4vw,1.35rem); color:#cfd4de; max-width:640px; margin:0 0 28px}
     .cta{display:flex; flex-wrap:wrap; gap:12px; align-items:center}
-    .btn{display:inline-block; background:var(--red); color:#fff; text-decoration:none; font-weight:700;
-      padding:13px 24px; border-radius:10px; letter-spacing:.02em; transition:transform .06s ease, filter .15s ease}
+    .btn{display:inline-block; background:var(--red); color:#fff; text-decoration:none; font-weight:700; padding:13px 24px; border-radius:10px; letter-spacing:.02em; transition:transform .06s ease, filter .15s ease}
     .btn:hover{filter:brightness(1.08)} .btn:active{transform:translateY(1px)}
     .btn.ghost{background:transparent; color:var(--off); border:1px solid var(--line)}
     .req{color:var(--muted); font-size:.85rem}
-    /* secciones */
     section{padding:clamp(32px,6vw,64px) 0; border-top:1px solid var(--line)}
     h2{font-size:clamp(1.4rem,3.4vw,2rem); margin:0 0 8px; letter-spacing:-.01em}
     .sub{color:var(--muted); margin:0 0 28px}
@@ -50,13 +46,11 @@
     .card h3{margin:0 0 6px; font-size:1.05rem}
     .card h3::before{content:""; display:inline-block; width:8px;height:8px;border-radius:2px;background:var(--teal); margin-right:9px; vertical-align:middle}
     .card p{margin:0; color:#c3c9d4; font-size:.95rem}
-    /* screenshot */
-    .shot{margin-top:8px; border:1px solid var(--line); border-radius:12px; overflow:hidden; background:var(--navy2)}
-    .shot img{display:block; width:100%; height:auto}
-    .shot .ph{display:flex; align-items:center; justify-content:center; height:clamp(220px,40vw,440px); color:var(--muted); font-size:.9rem; text-align:center; padding:20px}
-    /* pasos */
+    figure.shot{margin:8px 0 0; border:1px solid var(--line); border-radius:12px; overflow:hidden; background:var(--navy2)}
+    figure.shot + figure.shot{margin-top:16px}
+    figure.shot img{display:block; width:100%; height:auto}
+    figure.shot .cap{padding:10px 14px; color:var(--muted); font-size:.85rem; border-top:1px solid var(--line)}
     ol.steps{margin:0; padding-left:20px} ol.steps li{margin:0 0 8px; color:#c3c9d4}
-    /* disclaimer */
     .disc{background:var(--navy2); border:1px solid var(--line); border-radius:12px; padding:18px 20px; color:var(--muted); font-size:.9rem}
     .disc b{color:#c3c9d4}
     footer{border-top:1px solid var(--line); padding:28px 0; color:var(--muted); font-size:.85rem}
@@ -67,68 +61,101 @@
   <header>
     <div class="wrap bar">
       <span class="dot"></span>
-      <span class="brand">Aim Coach <small>para Valorant</small></span>
+      <span class="brand">Aim Coach <small data-es="para Valorant" data-en="for Valorant">para Valorant</small></span>
+      <div id="lang" aria-label="Language">
+        <button type="button" data-l="es">ES</button>
+        <button type="button" data-l="en">EN</button>
+      </div>
     </div>
   </header>
 
   <main>
     <div class="wrap hero">
-      <h1>Mejorá tu aim <span>en tiempo real</span></h1>
-      <p class="lead">Aim Coach analiza tu mouse y los eventos del juego, y te da feedback accionable dentro de Valorant: recoil, flicks, movimiento y crosshair placement. Sin salir de la partida.</p>
+      <h1 data-es-html="Mejorá tu aim <span>en tiempo real</span>" data-en-html="Improve your aim <span>in real time</span>">Mejorá tu aim <span>en tiempo real</span></h1>
+      <p class="lead"
+         data-es="Aim Coach analiza tu mouse y los eventos del juego, y te da feedback accionable dentro de Valorant: recoil, flicks, movimiento y crosshair placement. Sin salir de la partida."
+         data-en="Aim Coach reads your mouse and the game's events and gives you actionable feedback inside VALORANT: recoil, flicks, movement and crosshair placement. Without leaving the match.">Aim Coach analiza tu mouse y los eventos del juego, y te da feedback accionable dentro de Valorant: recoil, flicks, movimiento y crosshair placement. Sin salir de la partida.</p>
       <div class="cta">
-        <!-- EDITAR: poné acá el link de descarga (GitHub Release / OPK). Ver instrucciones. -->
-        <a class="btn" href="#descargar" id="download">Descargar</a>
-        <a class="btn ghost" href="#como-funciona">Cómo funciona</a>
-        <span class="req">Windows · corre sobre Overwolf</span>
+        <!-- EDITAR: link de descarga (GitHub Release / OPK / ficha del store). -->
+        <a class="btn" href="#descargar" id="download" data-es="Descargar" data-en="Download">Descargar</a>
+        <a class="btn ghost" href="#como-funciona" data-es="Cómo funciona" data-en="How it works">Cómo funciona</a>
+        <span class="req" data-es="Windows · corre sobre Overwolf" data-en="Windows · runs on Overwolf">Windows · corre sobre Overwolf</span>
       </div>
     </div>
 
     <section id="como-funciona">
       <div class="wrap">
-        <h2>Qué hace</h2>
-        <p class="sub">Coaching, no ventaja: lee tu propio input y los datos que el juego expone. No lee memoria ni automatiza nada.</p>
+        <h2 data-es="Qué hace" data-en="What it does">Qué hace</h2>
+        <p class="sub"
+           data-es="Coaching, no ventaja: lee tu propio input y los datos que el juego expone. No lee memoria ni automatiza nada."
+           data-en="Coaching, not an advantage: it reads your own input and the data the game exposes. No memory reading, no automation.">Coaching, no ventaja: lee tu propio input y los datos que el juego expone. No lee memoria ni automatiza nada.</p>
         <div class="grid">
-          <div class="card"><h3>Recoil</h3><p>Puntúa el control de tu spray contra el patrón real del arma (la fase controlable), con eje y tramo del error.</p></div>
-          <div class="card"><h3>Flicks</h3><p>Clasifica cada flick (corto / perfecto / pasado / lento) y detecta rachas para recomendarte ajustar la sensibilidad.</p></div>
-          <div class="card"><h3>Movimiento</h3><p>Strafe y counter-strafe por disparo: te avisa cuando tirás caminando o te quedás predecible, y refuerza los kills en movimiento.</p></div>
-          <div class="card"><h3>Crosshair placement</h3><p>Con el resultado por ronda te marca si apuntás bajo o al pecho en vez de a la cabeza.</p></div>
-          <div class="card"><h3>Overlay in-game</h3><p>Un panel liviano dentro del juego, configurable (tamaño, posición, opacidad) y en español o inglés.</p></div>
-          <div class="card"><h3>Calibración por arma</h3><p>Deriva tu baseline personal para medir desvíos de TU nivel, no de una referencia inventada.</p></div>
+          <div class="card">
+            <h3 data-es="Recoil" data-en="Recoil">Recoil</h3>
+            <p data-es="Puntúa el control de tu spray contra el patrón real del arma (la fase controlable), con eje y tramo del error."
+               data-en="Scores your spray control against the weapon's real pattern (the controllable phase), pinpointing the axis and segment of the error.">Puntúa el control de tu spray contra el patrón real del arma (la fase controlable), con eje y tramo del error.</p>
+          </div>
+          <div class="card">
+            <h3 data-es="Flicks" data-en="Flicks">Flicks</h3>
+            <p data-es="Clasifica cada flick (corto / perfecto / pasado / lento) y detecta rachas para recomendarte ajustar la sensibilidad."
+               data-en="Classifies every flick (short / perfect / overshoot / slow) and detects streaks to suggest tuning your sensitivity.">Clasifica cada flick (corto / perfecto / pasado / lento) y detecta rachas para recomendarte ajustar la sensibilidad.</p>
+          </div>
+          <div class="card">
+            <h3 data-es="Movimiento" data-en="Movement">Movimiento</h3>
+            <p data-es="Strafe y counter-strafe por disparo: te avisa cuando tirás caminando o te quedás predecible, y refuerza los kills en movimiento."
+               data-en="Strafe and counter-strafe per shot: it flags when you shoot while walking or stand still, and reinforces kills on the move.">Strafe y counter-strafe por disparo: te avisa cuando tirás caminando o te quedás predecible, y refuerza los kills en movimiento.</p>
+          </div>
+          <div class="card">
+            <h3 data-es="Crosshair placement" data-en="Crosshair placement">Crosshair placement</h3>
+            <p data-es="Con el resultado por ronda te marca si apuntás bajo o al pecho en vez de a la cabeza."
+               data-en="Using the per-round result, it tells you if you're aiming low or at the chest instead of the head.">Con el resultado por ronda te marca si apuntás bajo o al pecho en vez de a la cabeza.</p>
+          </div>
+          <div class="card">
+            <h3 data-es="Overlay in-game" data-en="In-game overlay">Overlay in-game</h3>
+            <p data-es="Un panel liviano dentro del juego, configurable (tamaño, posición, opacidad) y en español o inglés."
+               data-en="A lightweight in-game panel, configurable (size, position, opacity) and available in English or Spanish.">Un panel liviano dentro del juego, configurable (tamaño, posición, opacidad) y en español o inglés.</p>
+          </div>
+          <div class="card">
+            <h3 data-es="Calibración por arma" data-en="Per-weapon calibration">Calibración por arma</h3>
+            <p data-es="Deriva tu baseline personal para medir desvíos de TU nivel, no de una referencia inventada."
+               data-en="Derives your personal baseline to measure deviations from YOUR level, not from a made-up reference.">Deriva tu baseline personal para medir desvíos de TU nivel, no de una referencia inventada.</p>
+          </div>
         </div>
       </div>
     </section>
 
     <section>
       <div class="wrap">
-        <h2>Así se ve</h2>
-        <p class="sub">El overlay durante una sesión de práctica.</p>
-        <div class="shot">
-          <!-- EDITAR: reemplazá el div .ph por: <img src="screenshot.png" alt="Overlay de Aim Coach en Valorant" /> -->
-          <img src="App.png" alt="Application for configuration" />
-          <img src="InGame.jpg" alt="Overlay in game" />
-        </div>
+        <h2 data-es="Así se ve" data-en="See it in action">Así se ve</h2>
+        <p class="sub" data-es="El overlay dentro del juego y la app de escritorio." data-en="The in-game overlay and the desktop app.">El overlay dentro del juego y la app de escritorio.</p>
+        <figure class="shot">
+          <img src="InGame.jpg" alt="Aim Coach overlay in VALORANT" loading="lazy" />
+          <figcaption class="cap" data-es="Overlay in-game dando feedback en tiempo real." data-en="In-game overlay giving real-time feedback.">Overlay in-game dando feedback en tiempo real.</figcaption>
+        </figure>
+        <figure class="shot">
+          <img src="App.png" alt="Aim Coach desktop app — settings, calibration and Recoil Trainer" loading="lazy" />
+          <figcaption class="cap" data-es="App de escritorio: configuración, calibración y Recoil Trainer." data-en="Desktop app: settings, calibration and Recoil Trainer.">App de escritorio: configuración, calibración y Recoil Trainer.</figcaption>
+        </figure>
       </div>
     </section>
 
     <section id="descargar">
       <div class="wrap">
-        <h2>Instalar</h2>
-        <p class="sub">Rápido y sin configurar nada.</p>
+        <h2 data-es="Instalar" data-en="Install">Instalar</h2>
+        <p class="sub" data-es="Rápido y sin configurar nada." data-en="Fast, with nothing to configure.">Rápido y sin configurar nada.</p>
         <ol class="steps">
-          <li>Descargá e instalá <b>Overwolf</b> (gratis) si no lo tenés.</li>
-          <li>Instalá <b>Aim Coach</b> desde el botón de descarga.</li>
-          <li>Abrí <b>Valorant</b>: el overlay aparece solo. Toggle con <b>Ctrl+Shift+A</b>.</li>
+          <li data-es-html="Descargá e instalá <b>Overwolf</b> (gratis) si no lo tenés." data-en-html="Download and install <b>Overwolf</b> (free) if you don't have it.">Descargá e instalá <b>Overwolf</b> (gratis) si no lo tenés.</li>
+          <li data-es-html="Instalá <b>Aim Coach</b> desde el botón de descarga." data-en-html="Install <b>Aim Coach</b> from the download button.">Instalá <b>Aim Coach</b> desde el botón de descarga.</li>
+          <li data-es-html="Abrí <b>Valorant</b>: el overlay aparece solo. Toggle con <b>Ctrl+Shift+A</b>." data-en-html="Open <b>VALORANT</b>: the overlay shows up on its own. Toggle with <b>Ctrl+Shift+A</b>.">Abrí <b>Valorant</b>: el overlay aparece solo. Toggle con <b>Ctrl+Shift+A</b>.</li>
         </ol>
       </div>
     </section>
 
     <section>
       <div class="wrap">
-        <p class="disc">
-          <b>Aviso legal.</b> Aim Coach no está afiliado, asociado, autorizado ni respaldado por Riot Games, ni está oficialmente conectado con Riot Games o cualquiera de sus subsidiarias o afiliadas. VALORANT y Riot Games son marcas registradas de Riot Games, Inc.
-          <br><br>
-          <b>Legal notice.</b> Aim Coach is not affiliated with, endorsed, sponsored, or specifically approved by Riot Games, Inc. VALORANT and Riot Games are trademarks or registered trademarks of Riot Games, Inc.
-        </p>
+        <p class="disc"
+           data-es-html="<b>Aviso legal.</b> Aim Coach no está afiliado, asociado, autorizado ni respaldado por Riot Games, ni está oficialmente conectado con Riot Games o cualquiera de sus subsidiarias o afiliadas. VALORANT y Riot Games son marcas registradas de Riot Games, Inc."
+           data-en-html="<b>Legal notice.</b> Aim Coach is not affiliated with, endorsed, sponsored, or specifically approved by Riot Games, Inc., nor officially connected with Riot Games or any of its subsidiaries or affiliates. VALORANT and Riot Games are trademarks or registered trademarks of Riot Games, Inc."><b>Aviso legal.</b> Aim Coach no está afiliado, asociado, autorizado ni respaldado por Riot Games, ni está oficialmente conectado con Riot Games o cualquiera de sus subsidiarias o afiliadas. VALORANT y Riot Games son marcas registradas de Riot Games, Inc.</p>
       </div>
     </section>
   </main>
@@ -137,9 +164,29 @@
     <div class="wrap">
       <span>© <span id="y">2026</span> Aim Coach</span>
       <!-- EDITAR (opcional): mail o Discord de contacto/soporte -->
-      <span>Soporte: <a href="#">agregá tu contacto</a></span>
+      <span><span data-es="Soporte:" data-en="Support:">Soporte:</span> <a href="#" data-es="agregá tu contacto" data-en="add your contact">agregá tu contacto</a></span>
     </div>
   </footer>
-  <script>document.getElementById('y').textContent = new Date().getFullYear();</script>
+
+  <script>
+    (function () {
+      var KEY = 'aimcoach_site_lang';
+      function apply(l) {
+        document.documentElement.lang = l;
+        document.querySelectorAll('[data-es]').forEach(function (el) { el.textContent = el.getAttribute('data-' + l); });
+        document.querySelectorAll('[data-es-html]').forEach(function (el) { el.innerHTML = el.getAttribute('data-' + l + '-html'); });
+        document.querySelectorAll('#lang button').forEach(function (b) { b.classList.toggle('on', b.getAttribute('data-l') === l); });
+        try { localStorage.setItem(KEY, l); } catch (e) {}
+      }
+      var saved = null; try { saved = localStorage.getItem(KEY); } catch (e) {}
+      // default: la elección guardada, o el idioma del navegador (es -> español, resto -> inglés)
+      var def = saved || ((navigator.language || 'en').toLowerCase().indexOf('es') === 0 ? 'es' : 'en');
+      document.querySelectorAll('#lang button').forEach(function (b) {
+        b.addEventListener('click', function () { apply(b.getAttribute('data-l')); });
+      });
+      apply(def);
+      document.getElementById('y').textContent = new Date().getFullYear();
+    })();
+  </script>
 </body>
 </html>
